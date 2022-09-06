@@ -13,7 +13,8 @@ struct fornecedores {
 struct produtos {
     string descricao;
     string codigo;
-    string quantidade;
+    int quantidadeDisp;
+    int quantidadeVendida;
     string valor;
     fornecedores fornecedor;
     string situacao;
@@ -26,7 +27,7 @@ void cadastrarProduto (produtos &produto) {
     cout << "Código: ";
     getline (cin, produto.codigo);
     cout << "Quantidade: ";
-    getline (cin, produto.quantidade);
+    cin >> produto.quantidadeDisp;
     cout << "Valor: ";
     getline (cin, produto.valor);
     cout << "Fornecedor" << endl << "Nome: ";
@@ -62,6 +63,20 @@ void exportarProduto(produtos produto) {
     arquivo.close();
 }
 
+void consultarProduto (produtos produto) {
+    //consultar um produto pelo codigo
+    ifstream arquivo;
+    arquivo.open("produtos.bin", ios::binary);
+    while (arquivo.read((char*)&produto, sizeof(produto))) {
+        if (produto.codigo == produto.codigo) {
+            cout << "Código: " << produto.codigo << endl;
+            cout << "Quantidade: " << produto.quantidadeDisp << endl;
+            cout << "Quantidade vendida: " << produto.quantidadeVendida << endl;
+            cout << "Situação: " << produto.situacao << endl;
+        }
+    }
+    arquivo.close();
+}
 
 int main () {
     //menu da loja
@@ -70,7 +85,7 @@ int main () {
     bool existe = false;
     cout << "1 - Cadastrar produto" << endl;
     cout << "2 - Consultar produtos" << endl;
-    cout << "3 - Listar produto" << endl;
+    cout << "3 - Listar produtos cadastrados disponíveis ordenados pelo código do produto" << endl;
     cout << "4 - Excluir produto" << endl;
     cout << "5 - Efetuar uma venda" << endl;
     cout << "6 - Listar dados de produtos ativos em estoque" << endl;
@@ -88,6 +103,7 @@ int main () {
                 existe = false;
             break;
         case 2:
+            consultarProduto (produto);
             break;
         case 3:
             break;
@@ -98,8 +114,10 @@ int main () {
         case 6:
             break;
         case 7:
+            exportarProduto(produto);
             break;
         case 8:
+            cout << "Encerrando sistema..." << endl;
             break;
         default:
             cout << "Opção inválida" << endl;
