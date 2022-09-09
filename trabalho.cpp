@@ -78,11 +78,9 @@ void consultarProduto (produtos produto) {
     arquivo.close();
 }
 
-int main () {
-    //menu da loja
+
+int menu () {
     int opcao;
-    produtos produto;
-    bool existe = false;
     cout << "1 - Cadastrar produto" << endl;
     cout << "2 - Consultar produtos" << endl;
     cout << "3 - Listar produtos cadastrados disponíveis ordenados pelo código do produto" << endl;
@@ -93,35 +91,46 @@ int main () {
     cout << "8 - Sair" << endl;
     cout << "Opção: ";
     cin >> opcao;
-    cin.ignore();
-    switch (opcao) {
-        case 1:
-        checaProduto(produto, existe);
-            if (existe == false) 
-                cadastrarProduto (produto);
-            else 
-                existe = false;
-            break;
-        case 2:
-            consultarProduto (produto);
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        case 5:
-            break;
-        case 6:
-            break;
-        case 7:
-            exportarProduto(produto);
-            break;
-        case 8:
-            cout << "Encerrando sistema..." << endl;
-            break;
-        default:
-            cout << "Opção inválida" << endl;
-            break;
+    return opcao;
+}
+
+int main () {
+    //menu da loja
+    produtos produto;
+    bool existe = false;
+    int opcao = menu();
+    while (opcao != 8) {
+        switch (opcao) {
+            case 1:
+            checaProduto(produto, existe);
+                if (existe == false) 
+                    cadastrarProduto (produto);
+                else 
+                    existe = false;
+                break;
+            case 2:
+                consultarProduto (produto);
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+            case 7:
+                exportarProduto(produto);
+                break;
+            case 8:
+                cout << "Encerrando sistema..." << endl;
+                return 0
+                break;
+            default:
+                cout << "Opção inválida" << endl;
+                break;
+        }
+        int opcao = menu();
     }
     return 0;
 }
