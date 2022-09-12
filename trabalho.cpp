@@ -245,21 +245,21 @@ void exportarProduto(produtos produto[], int tam) {
         char *vetorCharLeitura = new char[tam * sizeof(produtos)];
         //ler o arquivo e armazenar no vetor char
         arquivoLeitura.read(vetorCharLeitura, tam * sizeof(produtos));
-        //transformar o vetor char em um vetor produto
-        memcpy(produto, vetorCharLeitura, tam * sizeof(produtos));
-        arquivoLeitura.close();
-    }
-    //mostrar no console
-    for (int i = 0; i < tam; i++) {
-        cout << "Dados exportados: " << endl;
-        //só mostrar os produtos que foram cadastrados
-        if (produto[i].codigo != "") {
-            cout << "Código: " << produto[i].codigo << endl;
-            cout << "Descrição: " << produto[i].descricao << endl;
-            cout << "Fornecedor" << endl << "Nome: " << produto[i].fornecedor.nome << endl;
-            cout << "Email: " << produto[i].fornecedor.email << endl;
-            cout << "Situação: " << produto[i].situacao << endl;
+        //criar um vetor produtos para armazenar os dados do vetor char
+        produtos *produtoLeitura = new produtos[tam];
+        memcpy(produtoLeitura, vetorCharLeitura, tam * sizeof(produtos));
+        //imprimir os dados do arquivo
+        for (int i = 0; i < tam; i++) {
+            cout << "Dados exportados: " << endl;
+            if (produtoLeitura[i].situacao == "ativo") {
+                cout << "Código: " << produtoLeitura[i].codigo << endl;
+                cout << "Descrição: " << produtoLeitura[i].descricao << endl;
+                cout << "Fornecedor" << endl << "Nome: " << produtoLeitura[i].fornecedor.nome << endl;
+                cout << "Email: " << produtoLeitura[i].fornecedor.email << endl;
+                cout << "Situação: " << produtoLeitura[i].situacao << endl;
+            }
         }
+        arquivoLeitura.close();
     }
 }
 
